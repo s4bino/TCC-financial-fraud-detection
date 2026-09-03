@@ -51,11 +51,18 @@ e coloque em `data/raw/creditcard.csv`.
 │       ├── hdbscan_grid_best_summary.csv
 │       └── hdbscan_grid_results_by_fold.csv
 │
+├── tests/                                    # suíte de testes unitários
+│   ├── conftest.py                           # fixtures: base sintética e folds
+│   ├── preprocessing/
+│   ├── models/
+│   └── utils/
+│
 ├── docs/monografia/                          # texto do TCC (LaTeX)
 │   ├── main.tex
 │   ├── refbib.bib
 │   └── uflamon.cls
 │
+├── pytest.ini
 ├── requirements.txt
 └── README.md
 ```
@@ -117,6 +124,43 @@ ao rodar localmente.
 python src/utils/elbow_method.py         # estimativa de eps
 python src/utils/stratified_sampling.py  # recorte estratificado
 ```
+
+---
+
+## Testes
+
+```bash
+pytest                  # suíte completa
+pytest -m "not slow"    # exclui os testes que treinam modelos
+pytest tests/preprocessing
+```
+
+A suíte cobre uma unidade por arquivo, espelhando a estrutura de `src/`:
+
+| Arquivo | Unidade sob teste |
+|---|---|
+| `preprocessing/test_resolve_target_column.py` | resolução da coluna alvo por nome ou índice |
+| `preprocessing/test_stratified_folds.py` | folds externos: exclusividade, cobertura e estratificação |
+| `preprocessing/test_external_k_folds.py` | materialização dos folds externos e metadados |
+| `preprocessing/test_internal_k_folds.py` | folds internos e isolamento do teste externo |
+| `models/test_manual_grid_search.py` | busca em grade, agregação por combinação e seleção |
+| `utils/test_scaling_data.py` | padronização ajustada no treino |
+| `utils/test_split_features_target.py` | separação entre preditoras e alvo |
+| `utils/test_get_optimal_eps.py` | estimativa do raio pelo método do cotovelo |
+| `utils/test_amostragem.py` | recorte estratificado da base |
+| `utils/test_verifica_diretorio.py` | criação idempotente do diretório de saída |
+
+As fixtures constroem uma base sintética com a mesma estrutura de
+`creditcard.csv` — 31 colunas, `Amount` assimétrica, `V1`–`V28` com variâncias
+decrescentes e `Class` desbalanceada — de modo que a suíte roda sem o arquivo
+de 150 MB, que não é versionado.
+
+Os testes verificam as propriedades das quais a metodologia depende: cada
+transação é testada exatamente uma vez ao longo dos folds, a proporção de
+fraudes é preservada em cada partição, o conjunto de teste externo nunca
+alcança as partições de calibração e o escalonador é ajustado apenas no
+treino. `run_hdbscan_grid_search.py` fica fora da suíte por exigir GPU e por
+começar com comandos de instalação do Colab, que impedem sua importação.
 
 ---
 
