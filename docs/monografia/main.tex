@@ -1,0 +1,334 @@
+\documentclass{uflamon}          % classe base para a monografia
+
+%==============================================================================
+% Utilizacao de pacotes
+\usepackage[T1]{fontenc}         % usa fontes postscript com acentos
+\usepackage[brazil]{babel}       % hifenização e títulos em português do Brasil
+\usepackage[utf8]{inputenc}     % permite edição direta com acentos
+\usepackage{amsmath}             % pacote da AMS para Matemática Avançada
+\usepackage{amssymb}             % símbolos extras da AMS
+\usepackage{latexsym}            % símbolos extras do LaTeX
+\usepackage{graphicx}            % para inserção de gráficos
+\usepackage{listings}            % para inserção de código
+\usepackage{fancyvrb}            % para inserção de saídas de comandos
+\usepackage{longtable}           % para tabelas muito grandes
+\usepackage{comment}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage{rotating}
+\usepackage{colortbl}            % cores em tabelas
+\newcolumntype{Z}{|>{\columncolor[gray]{0.9}}l|} %cor cinza em células
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\usepackage{multirow}            % para juntar duas linhas em uma só
+\usepackage{multicol}            % para uso de várias colunas
+
+% cores para os links cruzados
+\usepackage{color}
+\definecolor{rltred}{rgb}{0.2,0,0}
+\definecolor{rltgreen}{rgb}{0,0.2,0}
+\definecolor{rltblue}{rgb}{0,0,0.2}
+
+\usepackage[colorlinks=true,
+            urlcolor=rltblue,       % \href{...}{...} external (URL)
+            filecolor=rltgreen,     % \href{...} local file
+            linkcolor=rltred,       % \ref{...} and \pageref{...}
+            citecolor=rltgreen,
+            pdftitle={Detecção de fraudes financeiras},
+          pdfauthor={Heitor Rodrigues Sabino},
+          pdfsubject={Trabalho de Conclusão de Curso},
+          pdfkeywords={Fraudes. 2. DBSCAN . 3. Machine Learning. 4. Classificação.}%
+]{hyperref} % para referência cruzadas
+
+\usepackage{subfigure}           % figuras dentro de figuras
+\usepackage{caption}            % remodelando o formato dos títulos de tabelas e figuras
+
+% configuração padrão do listings   
+\lstset{
+   language=Python, % Ajustado para Python (comum em Data Science), altere se necessário
+   extendedchars=true,
+   tabsize=3,
+   basicstyle=\footnotesize\ttfamily,
+   stringstyle=\em,
+   showstringspaces=false 
+}
+
+% para referências de acordo com a ABNT
+\usepackage[alf,abnt-etal-cite=3,abnt-etal-list=3,abnt-url-package=url,abnt-emphasize=bf]{abntex2cite}
+
+% Especificando hifenizações que por ventura LaTeX não saiba fazer
+\hyphenation{hardware software Li-nux am-bien-te diag-nos-ti-car coor-de-na-ção}
+
+%==============================================================================
+% Dados da monografia, capa: autor, titulo, banca, etc... - SUBSTITUA DE ACORDO
+%==============================================================================
+\author{Heitor Rodrigues Sabino}
+\title{Detecção de fraudes financeiras: Algoritmo não supervisionado de agrupamento DBSCAN em comparação com abordagens supervisionadas de classificação Random Forest e XGBoost}
+\subtitle{}
+\engtitle{}
+\engsubtitle{}
+\edicao{}
+\date{2026}
+\tipo{Trabalho de conclusão de curso apresentado à Universidade Federal de Lavras, como parte das exigências do curso de Ciências da Computação, para a obtenção do título de Bacharel.}
+\orientador{-}
+\coorientador{Elaine Cecilia Gatto} % comente se não tiver coorientador
+\local{Lavras -- MG}
+\bancaum{ - }{UFLA}
+\bancadois{ - }{UFLA} 
+\defesa{ - }
+
+%==============================================================================
+% Início do Documento
+%==============================================================================
+\begin{document}
+
+\maketitle
+
+\dedic{Dedico à minha mãe Cintia Maria da Silva e ao meu pai Humberto Alencar Sabino.} 
+
+\thanks{Agradeço aos meus orientadores, professores e amigos.}        
+
+\epigrafe{ % citação opcional
+``Os circuitos de consagração social serão tanto mais eficazes quanto maior a distância social do objeto consagrado.''\\
+(Pierre Bourdie)}
+
+% palavras-chave
+\palchaves{Fraudes Financeiras; Aprendizado de Máquina; DBSCAN; Agrupamento; Classificação.}
+
+\resumo{ - }  
+
+% keywords devem vir antes do abstract
+\keywords{Financial Fraud; Machine Learning; DBSCAN; Clustering; Classification.} % keywords
+
+\abstract{ - } 
+
+%==============================================================================
+% Listas (Descomente o que for usar)
+%==============================================================================
+%\listoffigures                             % Lista de Figuras
+%\listofilustracoes
+%\listofgraficos                            % Lista de Gráficos
+%\listoftables                              % Lista de Tabelas
+%\listofquadros                             % Lista de Quadros
+\tableofcontents                           % Sumário
+
+\clearpage
+
+\pagestyle{ufla}
+
+%==============================================================================
+% Estrutura do TCC (Capítulos)
+% O comando \chapter garante que a seção comece em uma nova página.
+%==============================================================================
+
+\chapter{Introdução}
+% Escreva a introdução do seu trabalho aqui.
+
+\chapter{Trabalhos Correlatos}
+% Escreva os trabalhos relacionados e estado da arte aqui.
+
+%==============================================================================
+% Fundamentação Teórica
+%==============================================================================
+
+\chapter{Fundamentação Teórica}
+
+Este capítulo apresenta os conceitos teóricos fundamentais que embasam o desenvolvimento deste trabalho. 
+
+\section{Aprendizado de Máquina}
+
+Machine Learning tem-se por definição o desenvolvimento de algoritmos que capacitam computadores a aprender a realizar tarefas a partir de dados, sem necessidade de programação explícita para cada regra de execução, segundo \citeonline{samuel1959}, que introduziu o tema.
+
+As abordagens principais dividem-se em: Aprendizado Supervisionado (baseado em dados rotulados), Aprendizado Não Supervisionado (focado em dados não rotulados) e Aprendizado por Reforço (baseado em tentativa e erro). Será abordado nesta seção tanto sobre Aprendizado Não Supervisionado quanto o Aprendizado Supervisionado, embasado através de \citeonline{rezazadeh2025}.
+
+\subsection{Aprendizado Supervisionado}
+
+O aprendizado supervisionado destaca-se como uma das metodologias mais proeminentes dentro do Aprendizado de Máquina \cite{bzdok2018}. Essa abordagem é caracterizada por sua capacidade de aprender com experiências passadas mediante a utilização de conjuntos de dados históricos previamente rotulados. Ao analisar esses dados rotulados durante a fase de treinamento, o algoritmo adquire a capacidade de prever ou atribuir os rótulos apropriados a novos dados não classificados.
+
+As técnicas primárias empregadas no aprendizado supervisionado são a classificação e a regressão, as quais diferem fundamentalmente na natureza da previsão alvo \cite{bzdok2018}:
+
+\begin{itemize}
+    \item \textbf{Classificação:} É aplicada quando o vetor de saída previsto é de natureza categórica ou discreta. A função primária de um classificador é atribuir novos pontos de dados a categorias distinhas predefinidas, utilizando o conhecimento extraído da base de treinamento \cite{gopal2018}.
+    \item \textbf{Regressão:} Ao contrário da classificação, a técnica de regressão é utilizada quando a saída desejada é de natureza numérica ou contínua, conforme contextualizado por \citeonline{rezazadeh2025}.
+\end{itemize}
+
+\subsection{Aprendizado Não Supervisionado}
+
+A segunda principal técnica em ML é o aprendizado não supervisionado, empregado na construção de modelos preditivos em situações onde não há disponibilidade de dados previamente rotulados para o treinamento \cite{solorio2020}. Consequentemente, não há informações prévias sobre a correlação exata entre as características de entrada e saída.
+
+O papel do algoritmo, neste caso, é delinear de forma independente a estrutura oculta nos dados. Uma das distinções mais significativas em relação à metodologia supervisionada é que as abordagens não supervisionadas frequentemente requerem um grau mais elevado de interpretação humana. Uma vez que não existem métricas estatísticas simples que definam um resultado de forma binária (como um rótulo "certo ou errado"), o processo baseia-se fortemente em medidas de estatística descritiva e técnicas de visualização de dados \cite{gopal2018}. As principais categorias do aprendizado não supervisionado incluem:
+
+\begin{itemize}
+    \item \textbf{Agrupamento (Clustering):} Considerada a técnica não supervisionada mais prevalente \cite{kononenko2007}, o agrupamento visa organizar os dados com base em suas semelhanças intrínsecas. O objetivo é garantir que os itens dentro de um mesmo agrupamento (\textit{cluster}) compartilhem características fortes (como formato, cor ou dimensão), enquanto exibem alta dissimilaridade em relação aos itens de outros agrupamentos \cite{iglesias2021, shalev2014}.
+    \item \textbf{Associação:} Esta técnica foca na descoberta de dependências ou correlações entre entradas individuais de dados para, posteriormente, mapeá-las em conjunto \cite{dike2018}.
+    \item \textbf{Redução de Dimensionalidade:} Uma técnica adjacente que visa simplificar a complexidade dos dados não rotulados, extraindo as características mais relevantes sem perder a representatividade da informação \cite{gopal2018}.
+\end{itemize}
+
+\subsection{Pipeline de Desenvolvimento e Validação}
+
+A implementação de modelos de aprendizado supervisionado e não supervisionado seguem um fluxo metodológico geral, onde percorre etapas de pré-processamento até a avaliação final.
+
+\subsubsection{Estratificação}
+% Escreva sobre a Estratificação aqui.
+
+\subsubsection{Principal Component Analysis (PCA)}
+
+A Análise de Componentes Principais é um procedimento de estatística multivariável que reduz a dimensionalidade do \textit{dataset}, isso de forma a permitir de maneira intuitiva e estruturada a interpretação das principais \textit{features} inerentes a um conjunto de dados multivariado complexo \cite{greenacre2022}.
+
+\subsubsection{Escalonamento e padronização}
+% Escreva sobre o Escalonamento e padronização aqui.
+
+\subsubsection{Validação Cruzada Aninhada}
+
+Com o fim de mitigar o viés de otimismo na estimativa de desempenho, assegurar a estabilidade estatística, garantindo a consistência e confiabilidade dos resultados, e, também, fazer a cobertura integral do conjunto de dados durante o processo de modelagem, adotou-se a metodologia de validação cruzada aninhada (\textit{nested cross-validation}). Para \citeonline{krstajic2014}, parafraseando a literatura clássica \cite{stone1974, varma2006}, essa abordagem é indispensável quando se realiza otimização de hiperparâmetros, pois impede o vazamento de informações (\textit{data leakage}) ao separar de forma clara a etapa de calibração da etapa de generalização.
+
+O método é uma variação da validação cruzada, onde consiste em dividir o conjunto de dados em $k$ subconjuntos (\textit{folds}) distintos. A partir desses subconjuntos, criam-se mais $k$ subconjuntos que serão usados para validação e otimização de parâmetros.
+
+\section{Algoritmos Supervisionados}
+
+Neste tópico, serão descritos os algoritmos supervisionados baseados em árvores de decisão selecionados para o embasamento comparativo do estudo.
+
+\subsection{Random Forest}
+
+Uma árvore de decisão é a menor unidade formadora de um modelo \textit{Random Forest} (RF). Assim, segundo \citeonline{zhang2010}, a estrutura de uma árvore de decisão é constituída por camadas, onde a quantidade total dos dados a serem analisados se encontra na raiz, e assim as estruturas subsequentes possuem menor quantidade de dados. À medida que os dados atravessam a árvore, eles passam por nós internos até serem classificados em subgrupos terminais mutuamente exclusivos, as folhas \cite{west2016}. 
+
+O modelo RF é construído através de várias árvores de decisão, com o fim de superar limitações que somente a estrutura de uma árvore de decisão possui. Dessa forma, \citeonline{zhang2010} afirmam que sozinhas, cada árvore não representa um bom modelo, mas quando combinadas tem-se ganho de valor. Assim, por ser uma junção de modelos (árvores de decisão), o \textit{Random Forest} é categorizado como modelo de \textit{ensemble} \cite{salman2024}.
+
+O método utiliza a técnica \textit{Bagging} (\textit{Bootstrap Aggregating}). Esse processo consiste em gerar múltiplos conjuntos de treinamento a partir da base de dados original, selecionando as amostras de forma aleatória e com reposição. Cada subconjunto treina uma árvore independente. O resultado final do modelo é obtido pela agregação das respostas de todos os chamados \textit{base learners} (modelos menores como árvores de decisão): utiliza-se a média aritmética para tarefas de regressão ou o voto da maioria para classificação \cite{salman2024}.
+
+\subsection{Extreme Gradient Boosting}
+
+O \textit{Extreme Gradient Boosting}, comumente abreviado como XGBoost, consiste em uma otimização avançada da arquitetura \textit{Gradient Boosting Machine} (GBM). Assim como o seu predecessor, o XGBoost é classificado como um modelo \textit{ensemble}, pois utiliza uma coleção de modelos preditivos individuais (como as árvores de decisão) integrados em uma estrutura única para atingir um objetivo comum.
+
+Como o GBM atua como o alicerce teórico do XGBoost, é fundamental compreender a sua mecânica. O modelo é composto por um conjunto de preditores individuais, denominados \textit{base learners} \cite{wade2020}. Diferentemente do \textit{Random Forest}, em que a construção das árvores ocorre de maneira estritamente independente, o diferencial do \textit{Gradient Boosting} é o seu aprendizado sequencial fundamentado na correção de erros. O GBM otimiza seus resultados construindo novas árvores direcionadas especificamente para corrigir as falhas mapeadas nas iterações anteriores, adicionando-as ao conjunto para complementar as estruturas já existentes \cite{wade2020, pan2018}.
+
+A partir dessa base conceitual, o XGBoost surge como uma evolução de alta performance. O seu principal diferencial técnico é a exigência rigorosa para a expansão do modelo: uma nova ramificação só é construída se o ganho de eficiência gerado por essa inclusão for estritamente superior ao ganho da estrutura anterior. Consequentemente, caso o benefício da inclusão seja inferior ao da árvore que a originou, o algoritmo realiza uma poda, interrompendo o crescimento daquele nó \cite{chen2016}.
+
+\section{Algoritmo Não Supervisionado}
+
+\subsection{DBSCAN}
+
+O DBSCAN é um algoritmo de agrupamento que identifica padrões nos dados fundamentado na estimativa de níveis mínimos de densidade. O funcionamento do modelo depende da definição de dois parâmetros principais: um raio de alcance ($\epsilon$) e um número mínimo de vizinhos ($minPts$). Durante a análise, um objeto é classificado como um "ponto central" (\textit{core point}) se a quantidade de vizinhos presentes dentro do seu raio $\epsilon$ for igual ou superior ao limiar estabelecido por $minPts$ \cite{schubert2017}.
+
+A premissa fundamental do algoritmo é localizar regiões contínuas que satisfaçam essa densidade mínima, isolando-as de áreas mais esparsas do conjunto de dados. Para garantir eficiência computacional, o DBSCAN não calcula a densidade nos espaços vazios entre os pontos \cite{schubert2017}. Em vez disso, o modelo define que todos os vizinhos contidos no raio $\epsilon$ de um ponto central pertencem ao mesmo agrupamento (\textit{cluster}), sendo chamados de "diretamente alcançáveis por densidade". Caso algum desses vizinhos também seja um ponto central, o agrupamento se expande de forma transitiva para englobar as suas respectivas vizinhanças.
+
+Dentro da estrutura final do \textit{cluster}, os elementos que não atingem o limiar de vizinhos para serem centrais, mas estão dentro do raio de alcance de um ponto central, são classificados como "pontos de borda" (\textit{border points}). Por fim, os dados que estão isolados e não são alcançáveis pela densidade de nenhum agrupamento são categorizados como ruído (\textit{noise}). Nesse estudo, fraudes serão consideradas ruídos \cite{schubert2017}.
+
+%==============================================================================
+% Metodologia
+%==============================================================================
+
+\chapter{Metodologia}
+
+\section{Conjunto de Dados}
+
+Os dados referentes a transações financeiras reais são sigilosos em virtude da natureza comprometedora do dado e por ser de domínio privado, visto isso, pesquisas acerca de investigações de crimes financeiros enfrentam tal barreira. Nesse sentido, o conjunto de dados utilizado possui informações limitadas acerca das colunas com o objetivo de sanar a questão da confidencialidade dos registros.
+
+Assim, o conjunto de dados manipulado neste trabalho foi disponibilizado pelo Machine Learning Group da Université Libre de Bruxelles, ao qual está acessível pelo site Kaggle \cite{kaggle2018}.
+
+O \textit{dataset} contém transações em cartões de crédito em setembro de 2013, feitas por titulares de cartões europeus e foram coletadas e analisadas durante uma pesquisa em colaboração com a Worldline, uma empresa francesa de serviços de pagamento e transações, fundada em 1974. Foram capturadas 284.807 transações ao longo de um período de dois dias, onde apenas 492 são classificadas como fraudulentas. Logo, o conjunto de dados é altamente desbalanceado considerando a elevada desproporção entre as classes, com a classe positiva (fraude) representando 0.172% de todas as transações.
+
+Em relação às \textit{features}, o \textit{dataset} possui 31 variáveis numéricas das quais 28 (V1, V2, \dots, V28) delas foram submetidas ao processo de Análise de Componente Principal (PCA), uma técnica padrão e amplamente utilizada para reduzir a dimensionalidade de tais conjuntos de dados, assim aumentando a interpretabilidade e, de forma paralela, minimizando a perda de informação \cite{abdi2010}. Isso acontece por meio da criação de novas variáveis não correlacionadas que maximizam sucessivamente a variância. Concomitantemente, o PCA colabora para a anonimização dos dados \cite{alarfaj2022}. As \textit{features} que não foram submetidas ao PCA são \textit{amount}, \textit{class} e \textit{time}.
+
+\begin{table}[htb]
+    \centering
+    \caption{Descrição das colunas do conjunto de dados.}
+    \vspace{2mm}
+    \begin{tabular}{L{2cm} L{10cm} C{2cm}}
+        \toprule
+        \textbf{Variável} & \textbf{Descrição} & \textbf{Tipo} \\
+        \midrule
+        Time & Número de segundos decorridos entre a transação atual e a primeira transação registrada no conjunto de dados. & Contínua \\
+        \addlinespace
+        V1 a V28 & Componentes principais resultantes de uma transformação de redução de dimensionalidade (PCA). Os dados originais não são fornecidos para proteger a identidade dos usuários e informações sensíveis. & Contínua \\
+        \addlinespace
+        Amount & Valor monetário da transação. & Contínua \\
+        \addlinespace
+        Class & Variável alvo (rótulo). Assume o valor 1 caso a transação seja uma fraude e 0 caso seja uma transação genuína. & Binária \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:descricao_colunas}
+\end{table}
+
+\section{Pré-processamento}
+
+Através de análises acerca da base, notou-se que não há necessidade de tratamentos quanto a dados faltantes, nulos ou inserção incorreta. O conjunto de dados foi validado nesse sentido. Nenhum tratamento quanto a variáveis correlacionadas foi feito.
+
+Durante a etapa de pré-processamento foram feitas algumas transformações quanto aos dados. Assim, foram feitas padronizações nas variáveis exceto pela variável Class e pelas que passaram pelo processo de PCA, pois pressupõe-se que em ordem de aplicar a transformação PCA, é necessário que passe pelo processo de padronização antes, visto que o método é sensível às escalas.
+
+Já quanto a padronização das variáveis Amount e Time, foram escalonadas, pois em Machine Learning, esse processo transforma os valores das variáveis de acordo com uma regra definida, assim essas \textit{features} escalonadas tem o mesmo grau de influência e esse método é imune à escolha das unidades \cite{huang2015}.
+
+Foram usadas duas formas de padronização, uma para a coluna Time e uma para a coluna Amount. Para os valores da variável Time foi feito o escalonamento padrão, \textit{Z-score standardization} (Equação \ref{eq:zscore}):
+
+$$z = \frac{x - \mu_X}{\sigma_X}$$
+\label{eq:zscore}
+
+em que $\mu_X$ e $\sigma_X$ são a média e o desvio padrão da variável em questão.
+
+Foi usado este tipo de escalonamento pelo fato dos valores da \textit{feature} Time serem de natureza incremental e com limite determinístico, já que a coluna é o tempo em segundos decorridos desde a primeira transação registrada na base.
+
+A variável Amount (Valor) foi transformada utilizando o \textit{Robust Scaler}, uma vez que dados financeiros apresentam alta assimetria e presença severa de \textit{outliers} (valores transacionais atípicos). O uso de mediana e intervalo interquartil por este escalonador impede que valores extremos distorçam a escala da maioria. Uma vez que a mediana não é influenciada por \textit{outliers}, sendo por definição o dado central de um conjunto.
+
+% Descomente as linhas abaixo e insira o nome do arquivo da sua imagem quando for compilar
+%\begin{figure}[htb]
+%    \centering
+%    \includegraphics[width=0.8\textwidth]{nome_da_imagem_do_grafico.png} % Substitua pelo nome real do arquivo
+%    \caption{Disposição dos dados antes e depois do escalonamento.}
+%    \label{fig:escalonamento}
+%\end{figure}
+
+\section{Parametrização e avaliação de consistência}
+
+Um passo importante no que tange à parametrização e validação da consistência do modelo é a estratégia a ser tomada para tal feito. Visto isso, visamos realizar validação cruzada aninhada juntamente com a busca em grade como estratégia.
+
+\subsection{Nested Cross-Validation}
+
+O procedimento operacional se estrutura a partir de dois ciclos de repetição interdependentes: Ciclo externo (\textit{Outer Loop}) e Ciclo Interno (\textit{Inner Loop}).
+
+No externo, o conjunto de dados global é particionado/replicado de maneira pseudoaleatória em $k$ subconjuntos (são denominados \textit{folds}) mutuamente exclusivos e de dimensões aproximadamente equivalentes. Tanto a replicação quanto as divisões em particionamento de treino e teste são realizadas de forma estratificada, assegurando que cada \textit{fold} preserve a proporção original da variável alvo (classes lícita e fraudulenta). De acordo com \citeonline{kohavi1995}, a amostragem estratificada é superior ao esquema regular, pois reduz de forma consistente tanto o viés quanto a variância das estimativas de desempenho em conjuntos de dados do mundo real.
+
+Já no interno, os dados de treinamento provenientes do ciclo externo são novamente subdivididos em novos subconjuntos, treino e validação. É dentro deste ciclo secundário que se executa a busca em grade (\textit{Grid Search}) para a calibração dos hiperparâmetros do algoritmo. O modelo é treinado e validado em partições internas isoladas, mapeando-se a configuração paramétrica que otimiza a métrica alvo.
+
+Sumariamente, a relevância fundamental da validação cruzada aninhada está no fato de que as instâncias usadas na escolha dos parâmetros ideais, o ciclo interno, jamais coincidem com os dados empregados para inferir a capacidade real preditiva do modelo, o ciclo externo. Desse modo, o método assegura a cobertura da base, analisando todas as transações de dados de forma independente, assim resultando em uma estimativa de erro metodologicamente mais robusta, imparcial e menos propensa ao \textit{overfitting}.
+
+Para detalhar a distribuição dos dados, este trabalho adotou uma divisão em 5 \textit{folds} externos, compostos por subconjuntos de treino e teste. Essa partição seguiu a proporção de 80\% dos dados originais para o treinamento e 20\% para o teste. Em valores absolutos, cada \textit{fold} contém aproximadamente 227.845 instâncias para treino e 56.961 para teste. Adicionalmente, a partir de cada conjunto de treinamento dos \textit{folds} externos, realizou-se uma nova subdivisão interna para validação. Como resultado, o conjunto de treinamento final de cada \textit{fold} passou a contar com cerca de 182.276 instâncias, enquanto o conjunto de validação reuniu 45.569 instâncias. Conforme mencionado previamente, todas as partições foram geradas de forma estratificada, garantindo a manutenção da mesma proporção de fraudes presente na base original.
+
+\subsection{Grid Search}
+
+Para que um algoritmo de aprendizado de máquina extraia o máximo de sua capacidade preditiva e se adapte à topologia intrínseca do conjunto de dados, é imperativo que seus hiperparâmetros sejam calibrados. Conforme evidenciado pela literatura recente \cite{shams2024}, a utilização de configurações padrão ou arbitrárias frequentemente resulta em desempenho subótimo, tornando a etapa de otimização paramétrica um requisito fundamental para a robustez do modelo.
+
+Neste trabalho, adotou-se a Busca em Grade (\textit{Grid Search}) como mecanismo de otimização dentro do ciclo interno da validação aninhada. O \textit{Grid Search} é um método de varredura exaustiva que constrói uma malha multidimensional contendo todos os valores predefinidos para os parâmetros do algoritmo. Durante a fase de calibração, o modelo é instanciado, treinado e avaliado iterativamente para cada combinação única presente nesta grade \cite{shams2024}. 
+
+De acordo com estudos comparativos em otimização de hiperparâmetros \cite{liashchynskyi2019}, o \textit{Grid Search} demonstra-se a abordagem mais adequada e rigorosa para espaços de busca de baixa e média dimensionalidade. Embora possua um custo computacional linearmente proporcional ao tamanho da grade, o método assegura a exploração completa do domínio de parâmetros estipulados, garantindo a localização da combinação que matematicamente maximiza a métrica de desempenho na partição de validação, sem o risco de convergência prematura para ótimos locais.
+
+\section{Modelos}
+
+Os modelos analisados neste trabalho são: de natureza Supervisionada, Random Forest e XGBoost, e de natureza Não Supervisionada, HDBSCAN.
+
+\subsection{Supervisionados}
+% Escreva sobre os modelos supervisionados aqui.
+
+\chapter{Resultados e Discussão}
+% Apresente e discuta os resultados dos modelos aqui.
+
+\chapter{Conclusão}
+% Apresente a conclusão final do estudo e possíveis trabalhos futuros aqui.
+
+%==============================================================================
+% Incluindo bibliografia
+%==============================================================================
+\bibliographystyle{abntex2-alf}         % estilo para referências usando ABNT
+
+% Certifique-se de ter um arquivo chamado refbib.bib na mesma pasta com suas referências
+\referencias
+\bibliography{refbib.bib}        
+
+%==============================================================================
+% Apêndices / Anexos (Descomente se precisar)
+%==============================================================================
+%\apendices
+%\chapter{Título do Apêndice}
+
+\end{document}

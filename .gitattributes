@@ -1,0 +1,36 @@
+# Normalização de fim de linha.
+#
+# O projeto é editado no Windows e executado também em Linux (Google Colab).
+# Fixar LF no repositório e no diretório de trabalho evita diffs espúrios
+# entre os dois ambientes.
+* text=auto eol=lf
+
+# Código e texto
+*.py     text eol=lf
+*.md     text eol=lf
+*.txt    text eol=lf
+*.json   text eol=lf
+*.csv    text eol=lf
+*.cfg    text eol=lf
+*.yml    text eol=lf
+*.yaml   text eol=lf
+
+# LaTeX
+*.tex    text eol=lf
+*.bib    text eol=lf
+*.cls    text eol=lf
+*.sty    text eol=lf
+
+# Binários — nunca normalizar
+*.png    binary
+*.jpg    binary
+*.jpeg   binary
+*.pdf    binary
+*.pkl    binary
+*.joblib binary
+*.parquet binary
+*.npy    binary
+*.npz    binary
+
+# Notebooks: texto, mas sem tentativa de merge automático
+*.ipynb  text eol=lf merge=binary
