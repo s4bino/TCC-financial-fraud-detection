@@ -112,8 +112,3 @@ def inner_folds_dir(tmp_path, small_dataset) -> str:
         val.to_csv(folds_dir / f"fold_{fold}_val.csv", index=False)
 
     return str(folds_dir)
-
-
-def class_ratio(labels: pd.Series) -> float:
-    """Proporção da classe positiva (fraude) em uma série de rótulos."""
-    return float(labels.mean())

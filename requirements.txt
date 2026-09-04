@@ -1,7 +1,7 @@
 #==============================================================================
 # Dependências — CPU
 #
-# Cobre: src/preprocessing, src/models (supervisionados) e src/utils
+# Cobre: src/preprocessing e src/models (supervisionados)
 #
 #   pip install -r requirements.txt
 #==============================================================================
@@ -24,9 +24,6 @@ tqdm>=4.65
 
 # Detecção de núcleos físicos (src/models/run_supervised_grid_search.py)
 psutil>=5.9
-
-# Método do cotovelo para estimativa de eps (src/utils/elbow_method.py)
-kneed>=0.8
 
 #==============================================================================
 # Dependências — GPU (somente src/models/run_hdbscan_grid_search.py)
