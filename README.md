@@ -5,7 +5,7 @@ Trabalho de Conclusão de Curso — Ciência da Computação, Universidade Feder
 Comparação entre o algoritmo não supervisionado de agrupamento por densidade **HDBSCAN** (fraude tratada como ruído) e as abordagens supervisionadas de classificação **Random Forest** e **XGBoost**, sobre a base de transações de cartão de crédito do Machine Learning Group da Université Libre de Bruxelles.
 
 **Autor:** Heitor Rodrigues Sabino
-**Coorientadora:** Elaine Cecilia Gatto
+**Orientadora:** Elaine Cecilia Gatto
 
 ---
 
@@ -57,10 +57,14 @@ e coloque em `data/raw/creditcard.csv`.
 │   ├── models/
 │   └── utils/
 │
-├── docs/monografia/                          # texto do TCC (LaTeX)
-│   ├── main.tex
-│   ├── refbib.bib
-│   └── uflamon.cls
+├── docs/
+│   ├── monografia/                           # texto do TCC (LaTeX)
+│   │   ├── main.tex
+│   │   ├── refbib.bib
+│   │   └── uflamon.cls
+│   └── references/                           # vault do Obsidian: bibliografia
+│       ├── articles/                         # PDFs por tema (não versionados)
+│       └── citations/                        # notas de leitura
 │
 ├── pytest.ini
 ├── requirements.txt
