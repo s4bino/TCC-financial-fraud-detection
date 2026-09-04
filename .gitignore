@@ -86,7 +86,12 @@ kaggle.json
 *.synctex.gz
 *.toc
 *.xdv
-docs/monografia/main.pdf
+
+# O PDF compilado da monografia E versionado (docs/monografia/main.pdf),
+# para que a versao mais recente do texto fique disponivel no repositorio.
+
+# Ferramentas locais nao versionadas
+.tools/
 
 #==============================================================================
 # Bibliografia (docs/references)

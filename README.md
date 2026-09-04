@@ -6,6 +6,7 @@ Comparação entre o algoritmo não supervisionado de agrupamento por densidade 
 
 **Autor:** Heitor Rodrigues Sabino
 **Orientadora:** Elaine Cecilia Gatto
+**Coorientador:** Natanael Fabrício Dacioli Batista
 
 ---
 
@@ -150,6 +151,18 @@ alcança as partições de calibração, o resumo por combinação corresponde �
 média das métricas por fold e a execução paralela reproduz a sequencial.
 `run_hdbscan_grid_search.py` fica fora da suíte por exigir GPU e por começar
 com comandos de instalação do Colab, que impedem sua importação.
+
+---
+
+## Monografia
+
+O texto está em `docs/monografia/main.tex`, na classe `uflamon`, com referências
+em ABNT via `abntex2cite`. A compilação é feita no
+[Overleaf](https://www.overleaf.com/), e a versão mais recente do PDF é
+mantida versionada em `docs/monografia/main.pdf`.
+
+A classe exige o logo da UFLA em `docs/monografia/logoufla.pdf` (ou `.png`),
+referenciado por `\includegraphics{logoufla}` na capa.
 
 ---
 
