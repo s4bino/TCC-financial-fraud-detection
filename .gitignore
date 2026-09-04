@@ -89,6 +89,18 @@ kaggle.json
 docs/monografia/main.pdf
 
 #==============================================================================
+# Bibliografia (docs/references)
+#
+# Os PDFs sao material de editoras: cerca de 48 MB cuja redistribuicao em geral
+# nao e permitida. As notas de leitura em citations/ e o indice README.md sao
+# versionados; os arquivos em si, nao.
+#==============================================================================
+docs/references/articles/**/*.pdf
+
+# Configuracao local do vault do Obsidian (especifica da maquina)
+.obsidian/
+
+#==============================================================================
 # Editores e IDEs
 #==============================================================================
 .vscode/
