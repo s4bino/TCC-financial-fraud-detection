@@ -28,8 +28,7 @@ e coloque em `data/raw/creditcard.csv`.
 │   │   └── creditcard.csv
 │   └── processed/                            # artefatos gerados (não versionados)
 │       ├── outer_folds/                      # folds externos: treino/teste
-│       ├── inner_folds/                      # folds internos: treino/validação
-│       └── samples/                          # recortes amostrais estratificados
+│       └── inner_folds/                      # folds internos: treino/validação
 │
 ├── src/
 │   ├── preprocessing/
@@ -41,9 +40,7 @@ e coloque em `data/raw/creditcard.csv`.
 │   │   ├── run_supervised_grid_search.py     # entrada: modelos supervisionados
 │   │   └── run_hdbscan_grid_search.py        # entrada: HDBSCAN (grid por DBCV + avaliação externa)
 │   │
-│   └── utils/
-│       ├── elbow_method.py                   # estimativa de eps pelo método do cotovelo
-│       └── stratified_sampling.py            # recorte estratificado da base
+│   └── utils/                                # vazia — reservada para utilitários
 │
 ├── results/
 │   ├── supervised/                           # saída de run_supervised_grid_search.py
@@ -54,8 +51,7 @@ e coloque em `data/raw/creditcard.csv`.
 ├── tests/                                    # suíte de testes unitários
 │   ├── conftest.py                           # fixtures: base sintética e folds
 │   ├── preprocessing/
-│   ├── models/
-│   └── utils/
+│   └── models/
 │
 ├── docs/
 │   ├── monografia/                           # texto do TCC (LaTeX)
@@ -122,13 +118,6 @@ no bloco `__main__` apontam para o Google Drive, refletindo o ambiente Colab em 
 o experimento foi executado; ajuste-as para `data/processed/` e `results/unsupervised/`
 ao rodar localmente.
 
-**Utilitários:**
-
-```bash
-python src/utils/elbow_method.py         # estimativa de eps
-python src/utils/stratified_sampling.py  # recorte estratificado
-```
-
 ---
 
 ## Testes
@@ -148,11 +137,6 @@ A suíte cobre uma unidade por arquivo, espelhando a estrutura de `src/`:
 | `preprocessing/test_external_k_folds.py` | materialização dos folds externos e metadados |
 | `preprocessing/test_internal_k_folds.py` | folds internos e isolamento do teste externo |
 | `models/test_manual_grid_search.py` | busca em grade, agregação por combinação e seleção |
-| `utils/test_scaling_data.py` | padronização ajustada no treino |
-| `utils/test_split_features_target.py` | separação entre preditoras e alvo |
-| `utils/test_get_optimal_eps.py` | estimativa do raio pelo método do cotovelo |
-| `utils/test_amostragem.py` | recorte estratificado da base |
-| `utils/test_verifica_diretorio.py` | criação idempotente do diretório de saída |
 
 As fixtures constroem uma base sintética com a mesma estrutura de
 `creditcard.csv` — 31 colunas, `Amount` assimétrica, `V1`–`V28` com variâncias
@@ -162,9 +146,10 @@ de 150 MB, que não é versionado.
 Os testes verificam as propriedades das quais a metodologia depende: cada
 transação é testada exatamente uma vez ao longo dos folds, a proporção de
 fraudes é preservada em cada partição, o conjunto de teste externo nunca
-alcança as partições de calibração e o escalonador é ajustado apenas no
-treino. `run_hdbscan_grid_search.py` fica fora da suíte por exigir GPU e por
-começar com comandos de instalação do Colab, que impedem sua importação.
+alcança as partições de calibração, o resumo por combinação corresponde à
+média das métricas por fold e a execução paralela reproduz a sequencial.
+`run_hdbscan_grid_search.py` fica fora da suíte por exigir GPU e por começar
+com comandos de instalação do Colab, que impedem sua importação.
 
 ---
 
